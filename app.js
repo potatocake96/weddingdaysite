@@ -139,10 +139,10 @@ const placesData = [
         description: "A cozy local tavern perfect for a quick drink and relaxation.",
         minutesAway: 5,
         address: "Check maps for exact location",
-        lat: -37.8136,
-        lng: 144.9631,
-        linkAppleMaps: "https://maps.apple.com/?q=Goldy's+Tavern",
-        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Goldy's+Tavern"
+        lat: -37.8000,
+        lng: 144.9800,
+        linkAppleMaps: "https://maps.apple.com/?q=Goldy's+Tavern+Collingwood",
+        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Goldy's+Tavern+Collingwood"
     },
     {
         name: "Gelato Messina",
@@ -150,10 +150,10 @@ const placesData = [
         description: "Artisan gelato with creative flavors - perfect for a sweet treat!",
         minutesAway: 8,
         address: "Check maps for exact location",
-        lat: -37.8136,
-        lng: 144.9631,
-        linkAppleMaps: "https://maps.apple.com/?q=Gelato+Messina",
-        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Gelato+Messina"
+        lat: -37.8000,
+        lng: 144.9800,
+        linkAppleMaps: "https://maps.apple.com/?q=Gelato+Messina+Collingwood",
+        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Gelato+Messina+Collingwood"
     },
     {
         name: "Piccolina Gelateria",
@@ -161,10 +161,10 @@ const placesData = [
         description: "Authentic Italian gelato in a charming setting.",
         minutesAway: 7,
         address: "Check maps for exact location",
-        lat: -37.8136,
-        lng: 144.9631,
-        linkAppleMaps: "https://maps.apple.com/?q=Piccolina+Gelateria",
-        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Piccolina+Gelateria"
+        lat: -37.8000,
+        lng: 144.9800,
+        linkAppleMaps: "https://maps.apple.com/?q=Piccolina+Gelateria+Collingwood",
+        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Piccolina+Gelateria+Collingwood"
     },
     {
         name: "CIBI",
@@ -172,10 +172,10 @@ const placesData = [
         description: "Japanese-inspired café with excellent coffee and light meals.",
         minutesAway: 10,
         address: "Check maps for exact location",
-        lat: -37.8136,
-        lng: 144.9631,
-        linkAppleMaps: "https://maps.apple.com/?q=CIBI",
-        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=CIBI"
+        lat: -37.8000,
+        lng: 144.9800,
+        linkAppleMaps: "https://maps.apple.com/?q=CIBI+Collingwood",
+        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=CIBI+Collingwood"
     },
     {
         name: "Yarra Bend Park",
@@ -183,10 +183,65 @@ const placesData = [
         description: "Beautiful parkland perfect for a peaceful stroll along the river.",
         minutesAway: 12,
         address: "Check maps for exact location",
-        lat: -37.8136,
-        lng: 144.9631,
+        lat: -37.8000,
+        lng: 144.9800,
         linkAppleMaps: "https://maps.apple.com/?q=Yarra+Bend+Park",
         linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Yarra+Bend+Park"
+    },
+    {
+        name: "Smith Street",
+        category: "Walk",
+        description: "Vibrant shopping strip with cafes, bars, and boutiques - perfect for a stroll.",
+        minutesAway: 3,
+        address: "Smith Street, Collingwood",
+        lat: -37.8000,
+        lng: 144.9800,
+        linkAppleMaps: "https://maps.apple.com/?q=Smith+Street+Collingwood",
+        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Smith+Street+Collingwood"
+    },
+    {
+        name: "Collingwood Yards",
+        category: "Coffee",
+        description: "Creative hub with cafes and art spaces - great for coffee and a look around.",
+        minutesAway: 4,
+        address: "Johnston Street, Collingwood",
+        lat: -37.8000,
+        lng: 144.9800,
+        linkAppleMaps: "https://maps.apple.com/?q=Collingwood+Yards",
+        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Collingwood+Yards"
+    },
+    {
+        name: "The Standard Hotel",
+        category: "Drinks",
+        description: "Popular local pub with great atmosphere - perfect for a quick drink.",
+        minutesAway: 5,
+        address: "Fitzroy Street, Fitzroy",
+        lat: -37.8000,
+        lng: 144.9800,
+        linkAppleMaps: "https://maps.apple.com/?q=The+Standard+Hotel+Fitzroy",
+        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=The+Standard+Hotel+Fitzroy"
+    },
+    {
+        name: "Edinburgh Gardens",
+        category: "Walk",
+        description: "Beautiful park with open spaces - perfect for a relaxing walk.",
+        minutesAway: 8,
+        address: "Fitzroy North",
+        lat: -37.8000,
+        lng: 144.9800,
+        linkAppleMaps: "https://maps.apple.com/?q=Edinburgh+Gardens+Fitzroy",
+        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Edinburgh+Gardens+Fitzroy"
+    },
+    {
+        name: "Proud Mary Coffee",
+        category: "Coffee",
+        description: "Award-winning specialty coffee roaster - excellent coffee and light bites.",
+        minutesAway: 6,
+        address: "Gertrude Street, Collingwood",
+        lat: -37.8000,
+        lng: 144.9800,
+        linkAppleMaps: "https://maps.apple.com/?q=Proud+Mary+Coffee+Collingwood",
+        linkGoogleMaps: "https://www.google.com/maps/search/?api=1&query=Proud+Mary+Coffee+Collingwood"
     }
 ];
 
@@ -202,6 +257,15 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPlaces();
     updateCurrentEvent();
     setInterval(updateCurrentEvent, 60000);
+    
+    // Set initial active menu item
+    const menuItems = document.querySelectorAll('.menu-item');
+    menuItems.forEach(item => {
+        const itemPage = item.getAttribute('onclick');
+        if (itemPage && itemPage.includes("'home'")) {
+            item.classList.add('active');
+        }
+    });
     
     // Smooth scroll for hero section
     const scrollHint = document.querySelector('.scroll-hint');
@@ -225,11 +289,25 @@ function showPage(pageId) {
         page.classList.add('hidden');
     });
     
+    // Update menu item active states
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
     // Show selected page
     const targetPage = document.getElementById(`${pageId}-page`);
     if (targetPage) {
         targetPage.classList.remove('hidden');
         targetPage.classList.add('active');
+        
+        // Mark corresponding menu item as active
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            const itemPage = item.getAttribute('onclick');
+            if (itemPage && itemPage.includes(`'${pageId}'`)) {
+                item.classList.add('active');
+            }
+        });
         
         // Trigger re-render for animations
         requestAnimationFrame(() => {
@@ -258,49 +336,112 @@ function toggleMenu() {
     }
 }
 
-// Modern Parallax scrolling effect
+// Modern Parallax scrolling effect - Fixed and optimized
 function setupParallax() {
     const heroSection = document.querySelector('.hero');
     const heroTitle = document.querySelector('.hero-title');
     const heroImage = document.querySelector('.hero-image');
+    const heroOverlay = document.querySelector('.hero-overlay');
+    const heroContent = document.querySelector('.hero-content');
     
-    if (!heroSection) return;
+    // Background pattern parallax always runs, even if no hero section
     
     let ticking = false;
+    let lastScrollY = 0;
     
     function updateParallax() {
         const scrolled = window.pageYOffset;
-        const heroHeight = heroSection.offsetHeight;
-        const scrollProgress = Math.min(scrolled / heroHeight, 1);
+        const heroHeight = heroSection ? heroSection.offsetHeight : 0;
+        const isInHero = scrolled < heroHeight;
         
-        // Parallax for hero image
-        if (heroImage) {
-            const imageY = scrolled * 0.5;
-            const scale = 1 + scrollProgress * 0.1;
-            heroImage.style.transform = `translateY(${imageY}px) scale(${scale})`;
-            heroImage.style.opacity = 1 - scrollProgress * 0.3;
+        // Parallax for background pattern - unified movement across ALL pages continuously
+        const patternY = scrolled * 0.15;
+        document.documentElement.style.setProperty('--bg-pattern-y', `${patternY}px`);
+        
+        // Only apply hero-specific parallax when in hero section
+        if (isInHero && scrolled >= 0 && heroSection) {
+            const scrollProgress = Math.min(scrolled / heroHeight, 1);
+            
+            // Parallax for hero image - smooth and controlled
+            if (heroImage) {
+                const imageY = scrolled * 0.25; // Reduced speed for smoother effect
+                const scale = 1 + scrollProgress * 0.03; // Very subtle scale
+                const baseOpacity = 0.7;
+                const finalOpacity = Math.max(0.5, baseOpacity - scrollProgress * 0.2);
+                heroImage.style.transform = `translate3d(0, ${imageY}px, 0) scale(${scale})`;
+                heroImage.style.opacity = finalOpacity;
+            }
+            
+            // Update overlay opacity smoothly - increase as you scroll
+            if (heroOverlay) {
+                const overlayOpacity = 0.8 + scrollProgress * 0.15;
+                heroOverlay.style.opacity = Math.min(0.95, overlayOpacity);
+            }
+            
+            // Parallax for hero title - subtle movement, keep very visible
+            if (heroTitle) {
+                const titleY = scrolled * 0.15;
+                const titleOpacity = Math.max(0.85, 1 - scrollProgress * 0.15); // Keep much more visible
+                heroTitle.style.transform = `translate3d(0, ${titleY}px, 0)`;
+                heroTitle.style.opacity = titleOpacity;
+            }
+            
+            // Fade hero content smoothly, keep visible
+            if (heroContent) {
+                const contentOpacity = Math.max(0.8, 1 - scrollProgress * 0.2); // Keep more visible
+                heroContent.style.opacity = contentOpacity;
+            }
+        } else if (scrolled > heroHeight && heroSection) {
+            // When scrolled past hero, keep elements hidden
+            if (heroImage) {
+                heroImage.style.opacity = '0.4';
+            }
+            if (heroOverlay) {
+                heroOverlay.style.opacity = '0.95';
+            }
+            if (heroTitle) {
+                heroTitle.style.opacity = '0.3';
+            }
+            if (heroContent) {
+                heroContent.style.opacity = '0.5';
+            }
+        } else if (heroSection) {
+            // At top of page, ensure proper initial state
+            if (heroImage) {
+                heroImage.style.opacity = '0.7';
+                heroImage.style.transform = 'translate3d(0, 0, 0) scale(1)';
+            }
+            if (heroOverlay) {
+                heroOverlay.style.opacity = '0.8';
+            }
+            if (heroTitle) {
+                heroTitle.style.opacity = '1';
+                heroTitle.style.transform = 'translate3d(0, 0, 0)';
+                heroTitle.style.filter = 'none';
+            }
+            if (heroContent) {
+                heroContent.style.opacity = '1';
+            }
         }
         
-        // Parallax for hero title
-        if (heroTitle) {
-            const titleY = scrolled * 0.3;
-            const titleOpacity = Math.max(0.2, 1 - scrollProgress * 0.8);
-            heroTitle.style.transform = `translateY(${titleY}px)`;
-            heroTitle.style.opacity = titleOpacity;
-        }
-        
+        lastScrollY = scrolled;
         ticking = false;
     }
     
-    window.addEventListener('scroll', () => {
+    // Use passive listener for better performance
+    const handleScroll = () => {
         if (!ticking) {
             window.requestAnimationFrame(updateParallax);
             ticking = true;
         }
-    });
+    };
     
-    // Initial call
-    updateParallax();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Initial call to set proper state
+    requestAnimationFrame(() => {
+        updateParallax();
+    });
 }
 
 // Schedule rendering
@@ -489,7 +630,7 @@ function searchGuest(query) {
                 ${results.map(result => `
                     <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(135, 206, 235, 0.2);">
                         <div style="font-family: 'BrittanySignature', 'Great Vibes', cursive; font-size: 1.4rem; font-weight: normal; color: var(--light-blue-dark); margin-bottom: 6px; letter-spacing: 0.02em;">${toProperCase(result.guestName)}</div>
-                        <div style="color: var(--light-blue); font-weight: 500; font-size: 0.95rem;">Table ${result.tableNumber}</div>
+                        <div style="font-family: 'Lora', serif; color: var(--light-blue); font-weight: 500; font-size: 0.95rem;">Table ${result.tableNumber}</div>
                         ${result.flags && result.flags.includes('highChair') ? 
                             '<span class="category-badge" style="background: #fb923c; margin-top: 8px; display: inline-block;">High Chair</span>' : ''}
                     </div>
