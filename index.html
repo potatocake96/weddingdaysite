@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charlyn & Simon's Wedding Day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Modern Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <button onclick="showPage('home')" class="nav-link">Home</button>
+            <button onclick="toggleMenu()" class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Dropdown Menu -->
+    <div id="menu-dropdown" class="menu-dropdown hidden">
+        <button onclick="showPage('home')" class="menu-item">Home</button>
+        <button onclick="showPage('schedule')" class="menu-item">Schedule</button>
+        <button onclick="showPage('seating')" class="menu-item">Seating</button>
+        <button onclick="showPage('break')" class="menu-item">Break</button>
+    </div>
+
+    <!-- Home Page -->
+    <div id="home-page" class="page active">
+        <!-- Hero Section - Full Bleed -->
+        <section class="hero">
+            <div class="hero-background">
+                <img src="selfie.png" alt="Charlyn & Simon" class="hero-image">
+                <div class="hero-overlay"></div>
+            </div>
+            
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="name-1">Charlyn</span>
+                    <span class="ampersand">+</span>
+                    <span class="name-2">Simon</span>
+                </h1>
+                <p class="hero-date">February 7, 2026</p>
+                <div class="scroll-hint">
+                    <span>Scroll</span>
+                    <svg class="scroll-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Cards Section -->
+        <section class="nav-section">
+            <h2 class="section-title">Explore</h2>
+            <div class="cards-grid">
+                <button onclick="showPage('schedule')" class="nav-card">
+                    <div class="card-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Schedule</h3>
+                    <p class="card-desc">View the day's timeline</p>
+                </button>
+                
+                <button onclick="showPage('seating')" class="nav-card">
+                    <div class="card-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288m3 0H9.5m-5 0v-2c0-.656.126-1.283.356-1.857M4.5 20v-2c0-.656.126-1.283.356-1.857"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Seating</h3>
+                    <p class="card-desc">Find your table</p>
+                </button>
+                
+                <button onclick="showPage('break')" class="nav-card">
+                    <div class="card-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Break</h3>
+                    <p class="card-desc">Nearby places to visit</p>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Schedule Page -->
+    <div id="schedule-page" class="page hidden">
+        <div class="page-container">
+            <h2 class="page-title">Schedule</h2>
+            <p class="page-subtitle">FEBRUARY 7, 2026</p>
+            
+            <div id="current-event" class="current-event hidden">
+                <p class="event-label">HAPPENING NOW</p>
+                <p id="current-event-text" class="event-text"></p>
+            </div>
+            
+            <div class="filter-row">
+                <button onclick="scrollToEvent('ceremony')" class="filter-btn">Ceremony</button>
+                <button onclick="scrollToEvent('break')" class="filter-btn">Break</button>
+                <button onclick="scrollToEvent('reception')" class="filter-btn">Reception</button>
+            </div>
+            
+            <div id="schedule-timeline" class="timeline">
+                <!-- Timeline items -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Seating Plan Page -->
+    <div id="seating-page" class="page hidden">
+        <div class="page-container">
+            <h2 class="page-title">Seating Plan</h2>
+            <p class="page-subtitle">OUR FAVOURITE PEOPLE</p>
+            <p class="page-subtitle-small">PLEASE FIND YOUR SEAT</p>
+            
+            <div class="search-wrapper">
+                <input 
+                    type="text" 
+                    id="guest-search" 
+                    placeholder="Search for your name..." 
+                    class="search-input"
+                    oninput="searchGuest(this.value)"
+                >
+            </div>
+            
+            <div id="search-results" class="search-results hidden">
+                <!-- Results -->
+            </div>
+            
+            <div id="tables-grid" class="tables-grid">
+                <!-- Table cards -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Break/Places Page -->
+    <div id="break-page" class="page hidden">
+        <div class="page-container">
+            <h2 class="page-title">1-Hour Break</h2>
+            <p class="page-subtitle">4:30 PM - 5:30 PM</p>
+            <p class="page-subtitle-small">Recommended places nearby</p>
+            
+            <div class="filter-row">
+                <button onclick="filterPlaces('all')" class="filter-btn active">All</button>
+                <button onclick="filterPlaces('Coffee')" class="filter-btn">Coffee</button>
+                <button onclick="filterPlaces('Drinks')" class="filter-btn">Drinks</button>
+                <button onclick="filterPlaces('Food')" class="filter-btn">Food</button>
+                <button onclick="filterPlaces('Walk')" class="filter-btn">Walk</button>
+            </div>
+            
+            <div id="places-grid" class="places-grid">
+                <!-- Place cards -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Code and design by © Simon Dass</p>
+    </footer>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
