@@ -3,172 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charlyn & Simon's Wedding Day</title>
+    <title>Charlyn & Simon — Wedding Day</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Modern Navigation -->
-    <nav class="nav">
-        <div class="nav-container">
-            <button onclick="showPage('home')" class="nav-link">Home</button>
-            <button onclick="toggleMenu()" class="hamburger" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
+    <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true">
+        <defs>
+            <symbol id="icon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+            <symbol id="icon-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>
+            <symbol id="icon-seating" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18v2M4 14v2M4 10v2M20 18v2M20 14v2M20 10v2M8 8V6a2 2 0 012-2h4a2 2 0 012 2v2M6 20h12"/></symbol>
+            <symbol id="icon-map-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+            <symbol id="icon-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+        </defs>
+    </svg>
+
+    <header class="header">
+        <div class="header-inner">
+            <button type="button" onclick="showPage('home')" class="header-logo" aria-label="Home">Charlyn & Simon</button>
+            <button type="button" class="header-menu" aria-label="Menu" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
             </button>
         </div>
+    </header>
+
+    <nav id="menu-dropdown" class="nav-dropdown hidden" aria-hidden="true">
+        <button type="button" onclick="showPage('home')" class="menu-item">Home</button>
+        <button type="button" onclick="showPage('schedule')" class="menu-item">Schedule</button>
+        <button type="button" onclick="showPage('seating')" class="menu-item">Seating</button>
+        <button type="button" onclick="showPage('break')" class="menu-item">Break</button>
     </nav>
 
-    <!-- Dropdown Menu -->
-    <div id="menu-dropdown" class="menu-dropdown hidden">
-        <button onclick="showPage('home')" class="menu-item">Home</button>
-        <button onclick="showPage('schedule')" class="menu-item">Schedule</button>
-        <button onclick="showPage('seating')" class="menu-item">Seating</button>
-        <button onclick="showPage('break')" class="menu-item">Break</button>
-    </div>
-
-    <!-- Home Page -->
+    <!-- ========== HOME ========== -->
     <div id="home-page" class="page active">
-        <!-- Hero Section - Full Bleed -->
         <section class="hero">
-            <div class="hero-background">
-                <img src="selfie.png" alt="Charlyn & Simon" class="hero-image">
-                <div class="hero-overlay"></div>
+            <!-- Hero: couple only (parallax on scroll) -->
+            <div class="parallax-layer parallax-couple" aria-hidden="true">
+                <img src="wedding couple.png" alt="" class="parallax-img" width="280" height="340">
             </div>
-            
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="name-1">Charlyn</span>
-                    <span class="ampersand">+</span>
-                    <span class="name-2">Simon</span>
+            <div class="hero-inner">
+                <span class="hero-accent" aria-hidden="true"></span>
+                <h1 class="hero-headline">
+                    <span class="hero-line">OUR</span>
+                    <span class="hero-line">WEDDING</span>
+                    <span class="hero-line">DAY</span>
                 </h1>
-                <p class="hero-date">February 7, 2026</p>
-                <div class="scroll-hint">
-                    <span>Scroll</span>
-                    <svg class="scroll-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
+                <button type="button" onclick="showPage('schedule')" class="hero-cta">
+                    <svg class="hero-cta-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow"/></svg>
+                    <svg class="hero-cta-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow"/></svg>
+                    <svg class="hero-cta-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-arrow"/></svg>
+                    <span>EXPLORE THE DAY</span>
+                </button>
+            </div>
+            <button type="button" onclick="document.querySelector('.welcome').scrollIntoView({ behavior: 'smooth' })" class="hero-scroll-hint" aria-label="Scroll to message">
+                <span class="hero-scroll-hint-text">scroll down</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
+            </button>
+        </section>
+        <section class="welcome content-section-cream">
+            <div class="welcome-inner scroll-reveal">
+                <span class="section-accent" aria-hidden="true"></span>
+                <div class="welcome-message" id="welcome-message">
+                    <p id="welcome-message-text" class="welcome-text"></p>
+                </div>
+                <div class="welcome-signature-row">
+                    <p class="welcome-signature-wrap"><span id="welcome-signature" class="welcome-signature"></span></p>
+                    <div class="welcome-selfie" id="welcome-selfie">
+                        <img src="selfie.png" alt="" class="selfie-img" width="280" height="336">
+                    </div>
                 </div>
             </div>
         </section>
-
-        <!-- Navigation Cards Section -->
-        <section class="nav-section">
-            <h2 class="section-title">Explore</h2>
-            <div class="cards-grid">
-                <button onclick="showPage('schedule')" class="nav-card">
-                    <div class="card-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Schedule</h3>
-                    <p class="card-desc">View the day's timeline</p>
-                </button>
-                
-                <button onclick="showPage('seating')" class="nav-card">
-                    <div class="card-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288m3 0H9.5m-5 0v-2c0-.656.126-1.283.356-1.857M4.5 20v-2c0-.656.126-1.283.356-1.857"></path>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Seating</h3>
-                    <p class="card-desc">Find your table</p>
-                </button>
-                
-                <button onclick="showPage('break')" class="nav-card">
-                    <div class="card-icon">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Break</h3>
-                    <p class="card-desc">Nearby places to visit</p>
-                </button>
-            </div>
-        </section>
     </div>
 
-    <!-- Schedule Page -->
+    <!-- ========== SCHEDULE ========== -->
     <div id="schedule-page" class="page hidden">
-        <div class="page-container">
-            <h2 class="page-title">Schedule</h2>
-            <p class="page-subtitle">FEBRUARY 7, 2026</p>
-            
-            <div id="current-event" class="current-event hidden">
-                <p class="event-label">HAPPENING NOW</p>
-                <p id="current-event-text" class="event-text"></p>
+        <div class="inner-page">
+            <span class="detail-rose detail-rose-tr" aria-hidden="true"><img src="wedding rose.png" alt="" width="48" height="64"></span>
+            <div class="scroll-reveal">
+                <span class="section-accent" aria-hidden="true"></span>
+                <h2 id="schedule-heading" class="section-headline"><span class="section-line">SCHEDULE</span></h2>
+                <p class="section-meta">February 7, 2026</p>
             </div>
-            
-            <div class="filter-row">
-                <button onclick="scrollToEvent('ceremony')" class="filter-btn">Ceremony</button>
-                <button onclick="scrollToEvent('break')" class="filter-btn">Break</button>
-                <button onclick="scrollToEvent('reception')" class="filter-btn">Reception</button>
+            <div id="current-event" class="now-block now-block-minimal hidden scroll-reveal">
+                <p class="now-label">Happening now</p>
+                <p id="current-event-text" class="now-text"></p>
             </div>
-            
-            <div id="schedule-timeline" class="timeline">
-                <!-- Timeline items -->
+            <div class="schedule-jump scroll-reveal">
+                <button type="button" onclick="scrollToEvent('ceremony')" class="jump-btn">Ceremony</button>
+                <button type="button" onclick="scrollToEvent('break')" class="jump-btn">Break</button>
+                <button type="button" onclick="scrollToEvent('reception')" class="jump-btn">Reception</button>
             </div>
+            <div id="schedule-timeline" class="timeline scroll-reveal-parent" role="list"></div>
         </div>
     </div>
 
-    <!-- Seating Plan Page -->
+    <!-- ========== SEATING ========== -->
     <div id="seating-page" class="page hidden">
-        <div class="page-container">
-            <h2 class="page-title">Seating Plan</h2>
-            <p class="page-subtitle">OUR FAVOURITE PEOPLE</p>
-            <p class="page-subtitle-small">PLEASE FIND YOUR SEAT</p>
-            
-            <div class="search-wrapper">
-                <input 
-                    type="text" 
-                    id="guest-search" 
-                    placeholder="Search for your name..." 
-                    class="search-input"
-                    oninput="searchGuest(this.value)"
-                >
+        <div class="inner-page">
+            <span class="detail-rose detail-rose-tr" aria-hidden="true"><img src="wedding rose.png" alt="" width="48" height="64"></span>
+            <div class="scroll-reveal">
+                <span class="section-accent" aria-hidden="true"></span>
+                <h2 id="seating-heading" class="section-headline"><span class="section-line">SEATING</span></h2>
+                <p class="section-meta">Find your seat</p>
             </div>
-            
-            <div id="search-results" class="search-results hidden">
-                <!-- Results -->
+            <div class="search-wrap scroll-reveal">
+                <input type="text" id="guest-search" class="search-input" placeholder="Search your name…" oninput="searchGuest(this.value)" aria-label="Search guests">
             </div>
-            
-            <div id="tables-grid" class="tables-grid">
-                <!-- Table cards -->
-            </div>
+            <div id="search-results" class="search-results hidden" role="region" aria-live="polite"></div>
+            <div id="tables-grid" class="tables-grid scroll-reveal-parent" role="list"></div>
         </div>
     </div>
 
-    <!-- Break/Places Page -->
+    <!-- ========== BREAK ========== -->
     <div id="break-page" class="page hidden">
-        <div class="page-container">
-            <h2 class="page-title">1-Hour Break</h2>
-            <p class="page-subtitle">4:30 PM - 5:30 PM</p>
-            <p class="page-subtitle-small">Recommended places nearby</p>
-            
-            <div class="filter-row">
-                <button onclick="filterPlaces('all')" class="filter-btn active">All</button>
-                <button onclick="filterPlaces('Coffee')" class="filter-btn">Coffee</button>
-                <button onclick="filterPlaces('Drinks')" class="filter-btn">Drinks</button>
-                <button onclick="filterPlaces('Food')" class="filter-btn">Food</button>
-                <button onclick="filterPlaces('Walk')" class="filter-btn">Walk</button>
+        <div class="inner-page">
+            <span class="detail-rose detail-rose-tr" aria-hidden="true"><img src="wedding rose.png" alt="" width="48" height="64"></span>
+            <div class="scroll-reveal">
+                <span class="section-accent" aria-hidden="true"></span>
+                <h2 id="break-heading" class="section-headline"><span class="section-line">1-HOUR BREAK</span></h2>
+                <p class="section-meta">4:30 PM – 5:30 PM · Nearby places</p>
             </div>
-            
-            <div id="places-grid" class="places-grid">
-                <!-- Place cards -->
+            <div class="break-filters scroll-reveal">
+                <button type="button" onclick="filterPlaces('all')" class="filter-btn active">All</button>
+                <button type="button" onclick="filterPlaces('Coffee')" class="filter-btn">Coffee</button>
+                <button type="button" onclick="filterPlaces('Drinks')" class="filter-btn">Drinks</button>
+                <button type="button" onclick="filterPlaces('Food')" class="filter-btn">Food</button>
+                <button type="button" onclick="filterPlaces('Walk')" class="filter-btn">Walk</button>
             </div>
+            <div id="places-grid" class="places-grid scroll-reveal-parent" role="list"></div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
-        <p>Code and design by © Simon Dass</p>
+        <p class="footer-meta">7 February 2026 — Code & design © Simon Dass</p>
+        <nav class="bottom-nav" aria-label="Main">
+            <button type="button" onclick="showPage('home')" class="bottom-nav-item" aria-current="page">Home</button>
+            <button type="button" onclick="showPage('schedule')" class="bottom-nav-item">Schedule</button>
+            <button type="button" onclick="showPage('seating')" class="bottom-nav-item">Seating</button>
+            <button type="button" onclick="showPage('break')" class="bottom-nav-item">Break</button>
+        </nav>
     </footer>
 
+    <div id="rose-burst-container" class="rose-burst-container" aria-hidden="true"></div>
 
     <script src="app.js"></script>
 </body>

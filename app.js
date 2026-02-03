@@ -248,200 +248,189 @@ const placesData = [
 // Global state
 let currentFilter = 'all';
 let currentPage = 'home';
+let observeScrollTypewriter = () => {};
 
-// Initialize app
+const WELCOME_MESSAGE_MAIN = `We are so grateful for your love, support and presence on our special day.
+
+Your kind words and warm wishes made our wedding unforgettable.
+
+Thank you for being a part of our journey and for sharing in the joy of our celebration.
+
+With love, `;
+const WELCOME_MESSAGE_SIGNATURE = 'Simon and Charlyn';
+
+// Initialize app — multi-page, parallax on home
 document.addEventListener('DOMContentLoaded', () => {
-    setupParallax();
     renderSchedule();
     renderSeating();
-    renderPlaces();
+    renderPlaces('all');
     updateCurrentEvent();
     setInterval(updateCurrentEvent, 60000);
-    
-    // Set initial active menu item
-    const menuItems = document.querySelectorAll('.menu-item');
-    menuItems.forEach(item => {
-        const itemPage = item.getAttribute('onclick');
-        if (itemPage && itemPage.includes("'home'")) {
-            item.classList.add('active');
-        }
-    });
-    
-    // Smooth scroll for hero section
-    const scrollHint = document.querySelector('.scroll-hint');
-    if (scrollHint) {
-        scrollHint.addEventListener('click', () => {
-            const navSection = document.querySelector('.nav-section');
-            if (navSection) {
-                navSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+    setupParallax();
+    setupRoseBurst();
+    setupScrollReveal();
+    observeScrollTypewriter = setupScrollTypewriter();
+    observeScrollTypewriter();
+    setupWelcomeTypewriter();
+
+    const heroInner = document.querySelector('.hero-inner');
+    if (heroInner) {
+        setTimeout(() => heroInner.classList.add('hero-reveal'), 120);
     }
+
+    const header = document.querySelector('.header');
+    const homePage = document.getElementById('home-page');
+    function updateHeaderScroll() {
+        if (!header) return;
+        const onHome = homePage && homePage.classList.contains('active');
+        const hero = document.querySelector('.hero');
+        const scrolledPastHero = hero && window.scrollY > hero.offsetHeight - 60;
+        if (onHome && !scrolledPastHero) {
+            header.classList.remove('scrolled');
+        } else {
+            header.classList.add('scrolled');
+        }
+    }
+    if (!homePage?.classList.contains('active')) header?.classList.add('scrolled');
+    window.addEventListener('scroll', updateHeaderScroll, { passive: true });
+    updateHeaderScroll();
+    document.querySelectorAll('.menu-item')[0]?.classList.add('active');
 });
 
-// Page navigation with smooth transitions
 function showPage(pageId) {
-    currentPage = pageId;
-    
-    // Hide all pages
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-        page.classList.add('hidden');
-    });
-    
-    // Update menu item active states
-    document.querySelectorAll('.menu-item').forEach(item => {
-        item.classList.remove('active');
-    });
-    
-    // Show selected page
-    const targetPage = document.getElementById(`${pageId}-page`);
-    if (targetPage) {
-        targetPage.classList.remove('hidden');
-        targetPage.classList.add('active');
-        
-        // Mark corresponding menu item as active
-        const menuItems = document.querySelectorAll('.menu-item');
-        menuItems.forEach(item => {
-            const itemPage = item.getAttribute('onclick');
-            if (itemPage && itemPage.includes(`'${pageId}'`)) {
-                item.classList.add('active');
-            }
-        });
-        
-        // Trigger re-render for animations
-        requestAnimationFrame(() => {
-            if (pageId === 'schedule') {
-                renderSchedule();
-            } else if (pageId === 'seating') {
-                renderSeating();
-            } else if (pageId === 'break') {
-                renderPlaces(currentFilter);
-            }
-        });
+    if (currentPage === pageId) {
+        closeMenu();
+        return;
     }
-    
-    // Close menu if open
-    const menu = document.getElementById('menu-dropdown');
-    if (menu) menu.classList.add('hidden');
-    
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    currentPage = pageId;
+    document.querySelectorAll('.page').forEach(el => {
+        el.classList.remove('active');
+        el.classList.add('hidden');
+    });
+    const target = document.getElementById(pageId === 'home' ? 'home-page' : pageId + '-page');
+    if (target) {
+        target.classList.remove('hidden');
+        target.classList.add('active');
+    }
+    document.querySelectorAll('.menu-item').forEach((el, i) => {
+        const pages = ['home', 'schedule', 'seating', 'break'];
+        el.classList.toggle('active', pages[i] === pageId);
+    });
+    document.querySelectorAll('.bottom-nav-item').forEach((el, i) => {
+        const pages = ['home', 'schedule', 'seating', 'break'];
+        if (pages[i] === pageId) el.setAttribute('aria-current', 'page');
+        else el.removeAttribute('aria-current');
+    });
+    closeMenu();
+    window.scrollTo(0, 0);
+    if (pageId === 'schedule') renderSchedule();
+    else if (pageId === 'seating') renderSeating();
+    else if (pageId === 'break') renderPlaces(currentFilter);
+
+    requestAnimationFrame(() => {
+        document.querySelectorAll('.page.active .scroll-reveal, .page.active .scroll-reveal-parent').forEach((el) => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight - 60) el.classList.add('reveal');
+        });
+        observeScrollTypewriter();
+        if (pageId === 'home') {
+            const couple = document.querySelector('.parallax-couple');
+            if (couple) couple.style.transform = 'translate3d(0, 0, 0) scale(1)';
+            window.dispatchEvent(new Event('scroll'));
+        }
+    });
+}
+
+function playRoseBurst(clientX, clientY) {
+    const container = document.getElementById('rose-burst-container');
+    if (!container) return;
+    const roseSrc = 'wedding rose.png';
+    const count = 18;
+    const sizes = [32, 38, 44, 50, 56];
+
+    for (let i = 0; i < count; i++) {
+        const size = sizes[Math.floor(Math.random() * sizes.length)];
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 100 + Math.random() * 160;
+        const dx = Math.cos(angle) * distance;
+        const dy = Math.sin(angle) * distance + (Math.random() * 80 - 20);
+        const rot = (Math.random() - 0.5) * 720;
+
+        const el = document.createElement('div');
+        el.className = 'rose-burst';
+        el.style.left = (clientX - size / 2) + 'px';
+        el.style.top = (clientY - size / 2) + 'px';
+        el.style.width = size + 'px';
+        el.style.setProperty('--burst-dx', dx + 'px');
+        el.style.setProperty('--burst-dy', dy + 'px');
+        el.style.setProperty('--burst-r', rot + 'deg');
+        el.style.animationDelay = (Math.random() * 0.15) + 's';
+        el.style.animationDuration = (1.1 + Math.random() * 0.4) + 's';
+
+        const img = document.createElement('img');
+        img.src = roseSrc;
+        img.alt = '';
+        el.appendChild(img);
+        container.appendChild(el);
+
+        el.addEventListener('animationend', () => el.remove(), { once: true });
+    }
+}
+
+function setupRoseBurst() {
+    document.body.addEventListener('click', (e) => {
+        if (!e.target.closest('button')) return;
+        playRoseBurst(e.clientX, e.clientY);
+    });
 }
 
 function toggleMenu() {
     const menu = document.getElementById('menu-dropdown');
-    if (menu) {
-        menu.classList.toggle('hidden');
-    }
+    if (menu) menu.classList.toggle('hidden');
 }
 
-// Modern Parallax scrolling effect - Fixed and optimized
+function closeMenu() {
+    const menu = document.getElementById('menu-dropdown');
+    if (menu) menu.classList.add('hidden');
+}
+
+function setupScrollReveal() {
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) entry.target.classList.add('reveal');
+            });
+        },
+        { rootMargin: '0px 0px -40px 0px', threshold: 0.1 }
+    );
+    document.querySelectorAll('.scroll-reveal, .scroll-reveal-parent').forEach((el) => observer.observe(el));
+}
+
+// Parallax: hero couple only (selfie is in-flow in welcome section)
 function setupParallax() {
-    const heroSection = document.querySelector('.hero');
-    const heroTitle = document.querySelector('.hero-title');
-    const heroImage = document.querySelector('.hero-image');
-    const heroOverlay = document.querySelector('.hero-overlay');
-    const heroContent = document.querySelector('.hero-content');
-    
-    // Background pattern parallax always runs, even if no hero section
-    
+    const couple = document.querySelector('.parallax-couple');
+    const homePage = document.getElementById('home-page');
+    if (!homePage) return;
     let ticking = false;
-    let lastScrollY = 0;
-    
-    function updateParallax() {
-        const scrolled = window.pageYOffset;
-        const heroHeight = heroSection ? heroSection.offsetHeight : 0;
-        const isInHero = scrolled < heroHeight;
-        
-        // Parallax for background pattern - unified movement across ALL pages continuously
-        const patternY = scrolled * 0.15;
-        document.documentElement.style.setProperty('--bg-pattern-y', `${patternY}px`);
-        
-        // Only apply hero-specific parallax when in hero section
-        if (isInHero && scrolled >= 0 && heroSection) {
-            const scrollProgress = Math.min(scrolled / heroHeight, 1);
-            
-            // Parallax for hero image - smooth and controlled
-            if (heroImage) {
-                const imageY = scrolled * 0.25; // Reduced speed for smoother effect
-                const scale = 1 + scrollProgress * 0.03; // Very subtle scale
-                const baseOpacity = 0.7;
-                const finalOpacity = Math.max(0.5, baseOpacity - scrollProgress * 0.2);
-                heroImage.style.transform = `translate3d(0, ${imageY}px, 0) scale(${scale})`;
-                heroImage.style.opacity = finalOpacity;
-            }
-            
-            // Update overlay opacity smoothly - increase as you scroll
-            if (heroOverlay) {
-                const overlayOpacity = 0.8 + scrollProgress * 0.15;
-                heroOverlay.style.opacity = Math.min(0.95, overlayOpacity);
-            }
-            
-            // Parallax for hero title - subtle movement, keep very visible
-            if (heroTitle) {
-                const titleY = scrolled * 0.15;
-                const titleOpacity = Math.max(0.85, 1 - scrollProgress * 0.15); // Keep much more visible
-                heroTitle.style.transform = `translate3d(0, ${titleY}px, 0)`;
-                heroTitle.style.opacity = titleOpacity;
-            }
-            
-            // Fade hero content smoothly, keep visible
-            if (heroContent) {
-                const contentOpacity = Math.max(0.8, 1 - scrollProgress * 0.2); // Keep more visible
-                heroContent.style.opacity = contentOpacity;
-            }
-        } else if (scrolled > heroHeight && heroSection) {
-            // When scrolled past hero, keep elements hidden
-            if (heroImage) {
-                heroImage.style.opacity = '0.4';
-            }
-            if (heroOverlay) {
-                heroOverlay.style.opacity = '0.95';
-            }
-            if (heroTitle) {
-                heroTitle.style.opacity = '0.3';
-            }
-            if (heroContent) {
-                heroContent.style.opacity = '0.5';
-            }
-        } else if (heroSection) {
-            // At top of page, ensure proper initial state
-            if (heroImage) {
-                heroImage.style.opacity = '0.7';
-                heroImage.style.transform = 'translate3d(0, 0, 0) scale(1)';
-            }
-            if (heroOverlay) {
-                heroOverlay.style.opacity = '0.8';
-            }
-            if (heroTitle) {
-                heroTitle.style.opacity = '1';
-                heroTitle.style.transform = 'translate3d(0, 0, 0)';
-                heroTitle.style.filter = 'none';
-            }
-            if (heroContent) {
-                heroContent.style.opacity = '1';
-            }
+    function update() {
+        if (!homePage.classList.contains('active')) return;
+        const y = window.scrollY;
+        const hero = document.querySelector('.hero');
+        const heroH = hero ? hero.offsetHeight : 0;
+        if (couple && y <= heroH) {
+            const move = y * 0.5;
+            const scale = 1 + (y / heroH) * 0.08;
+            couple.style.transform = `translate3d(0, ${move}px, 0) scale(${scale})`;
         }
-        
-        lastScrollY = scrolled;
         ticking = false;
     }
-    
-    // Use passive listener for better performance
-    const handleScroll = () => {
+    window.addEventListener('scroll', () => {
         if (!ticking) {
-            window.requestAnimationFrame(updateParallax);
+            requestAnimationFrame(update);
             ticking = true;
         }
-    };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    // Initial call to set proper state
-    requestAnimationFrame(() => {
-        updateParallax();
-    });
+    }, { passive: true });
+    update();
 }
 
 // Schedule rendering
@@ -452,6 +441,8 @@ function renderSchedule() {
     // Clear and reset for animations
     container.innerHTML = '';
     
+    const parent = container;
+    if (parent) parent.classList.remove('reveal');
     scheduleData.forEach((item, index) => {
         const isActive = isEventActive(item);
         const isPast = isEventPast(item);
@@ -553,6 +544,8 @@ function renderSeating() {
     // Clear and reset for animations
     container.innerHTML = '';
     
+    const tablesParent = container.closest('.scroll-reveal-parent');
+    if (tablesParent) tablesParent.classList.remove('reveal');
     seatingData.tables.forEach((table, index) => {
         const card = document.createElement('div');
         card.className = 'table-card';
@@ -560,9 +553,7 @@ function renderSeating() {
         card.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h3 class="table-number">Table ${table.tableNumber}</h3>
-                <svg style="width: 24px; height: 24px; color: var(--light-blue); transition: transform 0.3s;" id="table-${table.tableNumber}-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
+                <svg class="table-chevron" style="width: 24px; height: 24px; color: var(--light-blue); transition: transform 0.3s ease;" id="table-${table.tableNumber}-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-chevron-down"/></svg>
             </div>
             <div id="table-${table.tableNumber}-guests" class="table-guests">
                 ${table.guests.map(guest => `
@@ -626,13 +617,13 @@ function searchGuest(query) {
     if (results.length > 0) {
         resultsContainer.innerHTML = `
             <div class="search-result-card">
-                <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--light-blue); margin-bottom: 20px;">Found ${results.length} result(s)</h3>
+                <h3 style="font-size: 1.2rem; font-weight: 600; color: var(--blue); margin-bottom: 16px;">Found ${results.length} result(s)</h3>
                 ${results.map(result => `
-                    <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(135, 206, 235, 0.2);">
-                        <div style="font-family: 'BrittanySignature', 'Great Vibes', cursive; font-size: 1.4rem; font-weight: normal; color: var(--light-blue-dark); margin-bottom: 6px; letter-spacing: 0.02em;">${toProperCase(result.guestName)}</div>
-                        <div style="font-family: 'Lora', serif; color: var(--light-blue); font-weight: 500; font-size: 0.95rem;">Table ${result.tableNumber}</div>
+                    <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border);">
+                        <div style="font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 4px;">${toProperCase(result.guestName)}</div>
+                        <div style="font-size: 14px; color: var(--blue); font-weight: 500;">Table ${result.tableNumber}</div>
                         ${result.flags && result.flags.includes('highChair') ? 
-                            '<span class="category-badge" style="background: #fb923c; margin-top: 8px; display: inline-block;">High Chair</span>' : ''}
+                            '<span class="category-badge" style="background: #c9732a; margin-top: 8px; display: inline-block;">High Chair</span>' : ''}
                     </div>
                 `).join('')}
             </div>
@@ -642,7 +633,7 @@ function searchGuest(query) {
     } else {
         resultsContainer.innerHTML = `
             <div class="search-result-card">
-                <p style="color: var(--gray-600);">No guests found matching "${query}"</p>
+                <p style="color: var(--text-muted);">No guests found matching "${query}"</p>
             </div>
         `;
         resultsContainer.classList.remove('hidden');
@@ -650,16 +641,129 @@ function searchGuest(query) {
     }
 }
 
+// Typewriter: reveal text character by character (optional onComplete callback)
+function typewriterEffect(el, textOrSpeed, speedMs, delayMs, onComplete) {
+    if (!el) return;
+    let text, speed, delay;
+    if (typeof textOrSpeed === 'string') {
+        text = textOrSpeed;
+        speed = speedMs ?? 45;
+        delay = delayMs ?? 0;
+    } else {
+        text = el.textContent;
+        el.textContent = '';
+        speed = textOrSpeed ?? 45;
+        delay = speedMs ?? 0;
+    }
+    el.classList.add('typewriter-cursor');
+    let i = 0;
+    function type() {
+        if (i <= text.length) {
+            el.textContent = text.slice(0, i);
+            i++;
+            el._typewriterTimer = setTimeout(type, speed);
+        } else {
+            el.classList.remove('typewriter-cursor');
+            if (typeof onComplete === 'function') onComplete();
+        }
+    }
+    el._typewriterTimer = setTimeout(() => type(), delay);
+}
+
+// Welcome message: typewriter when section scrolls into view; then signature in Brittany font
+function setupWelcomeTypewriter() {
+    const block = document.getElementById('welcome-message');
+    const textEl = document.getElementById('welcome-message-text');
+    const signatureEl = document.getElementById('welcome-signature');
+    if (!block || !textEl) return;
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                if (block.classList.contains('welcome-typewriter-done')) return;
+                block.classList.add('welcome-typewriter-done');
+                typewriterEffect(textEl, WELCOME_MESSAGE_MAIN, 12, 0, () => {
+                    if (signatureEl) {
+                        typewriterEffect(signatureEl, WELCOME_MESSAGE_SIGNATURE, 70, 350, () => {
+                            const selfieEl = document.getElementById('welcome-selfie');
+                            if (selfieEl) selfieEl.classList.add('selfie-reveal');
+                        });
+                    }
+                });
+            });
+        },
+        { rootMargin: '0px 0px -60px 0px', threshold: 0.2 }
+    );
+    observer.observe(block);
+}
+
+// Scroll-triggered typewriter: run when card scrolls into view
+function setupScrollTypewriter() {
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const card = entry.target;
+                if (card.classList.contains('typewriter-done')) return;
+                card.classList.add('typewriter-done');
+
+                if (card.classList.contains('place-card')) {
+                    const nameEl = card.querySelector('.place-name');
+                    const descEl = card.querySelector('.place-desc');
+                    const nameText = nameEl ? nameEl.textContent : '';
+                    const descText = descEl ? descEl.textContent : '';
+                    if (nameEl) {
+                        nameEl.textContent = '';
+                        typewriterEffect(nameEl, nameText, 45, 0);
+                    }
+                    if (descEl) {
+                        descEl.textContent = '';
+                        typewriterEffect(descEl, descText, 18, nameText.length * 45 + 80);
+                    }
+                    return;
+                }
+                if (card.classList.contains('timeline-card')) {
+                    const titleEl = card.querySelector('.timeline-title');
+                    if (titleEl) {
+                        const t = titleEl.textContent;
+                        titleEl.textContent = '';
+                        typewriterEffect(titleEl, t, 35, 0);
+                    }
+                }
+                if (card.classList.contains('table-card')) {
+                    const numEl = card.querySelector('.table-number');
+                    if (numEl) {
+                        const t = numEl.textContent;
+                        numEl.textContent = '';
+                        typewriterEffect(numEl, t, 40, 0);
+                    }
+                }
+            });
+        },
+        { rootMargin: '0px 0px -40px 0px', threshold: 0.2 }
+    );
+
+    function observeTargets() {
+        document.querySelectorAll('.place-card:not(.typewriter-done), .timeline-card:not(.typewriter-done), .table-card:not(.typewriter-done)').forEach((el) => observer.observe(el));
+    }
+    observeTargets();
+    return observeTargets;
+}
+
 // Places rendering
 function renderPlaces(filter = 'all') {
     const container = document.getElementById('places-grid');
     if (!container) return;
     
+    container.querySelectorAll('.place-name, .place-desc').forEach((el) => {
+        if (el._typewriterTimer) clearTimeout(el._typewriterTimer);
+    });
+    
     const filtered = filter === 'all' 
         ? placesData 
         : placesData.filter(place => place.category === filter);
     
-    // Clear and reset for animations
+    container.classList.remove('reveal');
     container.innerHTML = '';
     
     filtered.forEach((place, index) => {
@@ -676,16 +780,11 @@ function renderPlaces(filter = 'all') {
             <p class="place-desc">${place.description}</p>
             <div class="place-info">
                 <div class="place-info-item">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-clock"/></svg>
                     <span>${place.minutesAway} min away</span>
                 </div>
                 <div class="place-info-item">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-map-pin"/></svg>
                     <span>${place.address}</span>
                 </div>
             </div>
@@ -695,21 +794,24 @@ function renderPlaces(filter = 'all') {
         `;
         container.appendChild(card);
     });
+    
+    container.classList.add('reveal');
+    observeScrollTypewriter();
 }
 
 // Filter places
 function filterPlaces(category) {
     currentFilter = category;
-    
-    // Update filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.remove('active');
-        const btnText = btn.textContent.trim();
-        if ((category === 'all' && btnText === 'All') || btnText === category) {
-            btn.classList.add('active');
-        }
-    });
-    
+    const container = document.querySelector('.break-filters');
+    if (container) {
+        container.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+            const btnText = btn.textContent.trim();
+            if ((category === 'all' && btnText === 'All') || btnText === category) {
+                btn.classList.add('active');
+            }
+        });
+    }
     renderPlaces(category);
 }
 
