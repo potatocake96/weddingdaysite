@@ -501,6 +501,192 @@ body {
     opacity: 0.92;
 }
 
+/* Cameras page */
+.camera-picker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    margin-top: 32px;
+    margin-bottom: 40px;
+}
+
+.camera-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.camera-floating-img {
+    width: clamp(180px, 42vw, 260px);
+    display: block;
+    filter: drop-shadow(0 14px 28px rgba(0,0,0,0.2));
+    transform: rotate(var(--camera-tilt, -4deg));
+    transition: transform 0.25s ease, filter 0.25s ease;
+    animation: cameraFloat 6s ease-in-out infinite;
+}
+
+.camera-button:nth-child(1) .camera-floating-img {
+    --camera-tilt: -4deg;
+}
+
+.camera-button:nth-child(2) .camera-floating-img {
+    --camera-tilt: 4deg;
+    animation-delay: 1.5s;
+}
+
+.camera-button:nth-child(1) {
+    align-self: flex-start;
+    margin-left: 8%;
+}
+
+.camera-button:nth-child(2) {
+    align-self: flex-end;
+    margin-right: 8%;
+}
+
+.camera-button:hover .camera-floating-img {
+    transform: translateY(-8px) scale(1.03) rotate(0deg);
+    filter: drop-shadow(0 18px 36px rgba(0,0,0,0.25));
+}
+
+.camera-button-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+}
+
+@keyframes cameraFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(var(--camera-tilt, -4deg));
+    }
+    50% {
+        transform: translateY(-6px) rotate(calc(var(--camera-tilt, -4deg) * 0.6));
+    }
+}
+
+.camera-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 12px;
+}
+
+.camera-steps {
+    padding-left: 1.2rem;
+    margin: 0 0 16px;
+    font-size: 0.95rem;
+    color: var(--text);
+}
+
+.camera-steps li {
+    margin-bottom: 10px;
+}
+
+.camera-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.camera-note a {
+    color: var(--blue-darker);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.camera-note a:hover {
+    text-decoration: underline;
+}
+
+.camera-warning {
+    font-size: 0.85rem;
+    color: var(--text);
+    margin-top: 6px;
+}
+
+/* Camera modal */
+.camera-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.camera-modal.open {
+    display: flex;
+}
+
+.camera-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+}
+
+.camera-modal-content {
+    position: relative;
+    background: var(--cream-light);
+    padding: 24px 22px 20px;
+    max-width: 360px;
+    width: calc(100% - 40px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.24);
+    border-radius: 0;
+    border: 1px solid rgba(0,0,0,0.12);
+    z-index: 1;
+}
+
+.camera-modal-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.camera-modal .camera-heading {
+    margin-top: 0;
+}
+
+.camera-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.camera-modal-icon {
+    width: 34px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.25));
+    animation: cameraIconFloat 5s ease-in-out infinite;
+}
+
+@keyframes cameraIconFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(-4deg);
+    }
+    50% {
+        transform: translateY(-4px) rotate(0deg);
+    }
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
 /* Content sections — cream, thin accent line, stacked heading, body, CTA (ref: WHO WE ARE / WHAT WE DO) */
 .content-section {
     padding: var(--space-lg) var(--space) 64px;
@@ -1148,6 +1334,15 @@ body {
     }
     .welcome-selfie {
         width: clamp(120px, 26vw, 200px);
+    }
+    .camera-button:nth-child(1),
+    .camera-button:nth-child(2) {
+        align-self: center;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .camera-floating-img {
+        width: clamp(160px, 48vw, 220px);
     }
     .hero-headline {
         font-size: clamp(2.2rem, 14vw, 3.5rem);

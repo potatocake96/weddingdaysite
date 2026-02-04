@@ -313,11 +313,11 @@ function showPage(pageId) {
         target.classList.add('active');
     }
     document.querySelectorAll('.menu-item').forEach((el, i) => {
-        const pages = ['home', 'schedule', 'seating', 'break'];
+        const pages = ['home', 'schedule', 'seating', 'break', 'cameras'];
         el.classList.toggle('active', pages[i] === pageId);
     });
     document.querySelectorAll('.bottom-nav-item').forEach((el, i) => {
-        const pages = ['home', 'schedule', 'seating', 'break'];
+        const pages = ['home', 'schedule', 'seating', 'break', 'cameras'];
         if (pages[i] === pageId) el.setAttribute('aria-current', 'page');
         else el.removeAttribute('aria-current');
     });
@@ -431,6 +431,30 @@ function setupParallax() {
         }
     }, { passive: true });
     update();
+}
+
+function openCameraModal(which) {
+    const modal = document.getElementById('camera-modal');
+    const body = document.getElementById('camera-modal-body');
+    const template = document.getElementById(`camera-${which}-template`);
+
+    if (!modal || !body || !template) return;
+
+    body.innerHTML = template.innerHTML;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+}
+
+function closeCameraModal() {
+    const modal = document.getElementById('camera-modal');
+    const body = document.getElementById('camera-modal-body');
+    if (!modal || !body) return;
+
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    body.innerHTML = '';
 }
 
 // Schedule rendering

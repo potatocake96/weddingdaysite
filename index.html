@@ -34,6 +34,7 @@
         <button type="button" onclick="showPage('schedule')" class="menu-item">Schedule</button>
         <button type="button" onclick="showPage('seating')" class="menu-item">Seating</button>
         <button type="button" onclick="showPage('break')" class="menu-item">Break</button>
+        <button type="button" onclick="showPage('cameras')" class="menu-item">Cameras</button>
     </nav>
 
     <!-- ========== HOME ========== -->
@@ -137,6 +138,71 @@
         </div>
     </div>
 
+    <!-- ========== CAMERAS ========== -->
+    <div id="cameras-page" class="page hidden">
+        <div class="inner-page">
+            <span class="detail-rose detail-rose-tr" aria-hidden="true"><img src="wedding rose.png" alt="" width="48" height="64"></span>
+
+            <div class="scroll-reveal">
+                <span class="section-accent" aria-hidden="true"></span>
+                <h2 class="section-headline"><span class="section-line">FILM CAMERAS</span></h2>
+                <p class="section-meta">Pick the camera you’re holding for a quick how‑to.</p>
+                <p class="camera-warning"><strong>Important:</strong> Our venue is quite dark — please use flash for these cameras whenever you’re indoors or the light feels low, otherwise the photos may not be visible.</p>
+            </div>
+
+            <div class="camera-picker scroll-reveal">
+                <button type="button" class="camera-button" onclick="openCameraModal('canon')">
+                    <img src="cameras/af35j.png" alt="Canon AF35J camera" class="camera-floating-img">
+                    <span class="camera-button-label">Canon AF35J</span>
+                </button>
+
+                <button type="button" class="camera-button" onclick="openCameraModal('kodak')">
+                    <img src="cameras/kodak h35.png" alt="Kodak Ektar H35 camera" class="camera-floating-img">
+                    <span class="camera-button-label">Kodak Ektar H35</span>
+                </button>
+            </div>
+
+            <section id="camera-canon-template" class="camera-howto-template" hidden>
+                <div class="camera-modal-header">
+                    <img src="cameras/af35j.png" alt="" class="camera-modal-icon">
+                    <h3 class="camera-heading">Canon AF35J — quick how‑to</h3>
+                </div>
+                <ol class="camera-steps">
+                    <li><strong>Point, half‑press, full press</strong><br>Look through the viewfinder, keep fingers away from the lens and flash. Half‑press the shutter to focus, then press all the way down to take the photo. The film winds itself.</li>
+                    <li><strong>Flash (low light / indoors)</strong><br>The flash pops up when the camera thinks it needs it. If it’s dim, just point and shoot – don’t cover the flash window.</li>
+                    <li><strong>If it beeps or won’t shoot</strong><br>That’s usually a “too dark” or “end of roll” warning. Don’t open the back or force anything.</li>
+                </ol>
+                <p class="camera-note">If it feels stuck, tired or confusing, please hand it to one of the photographers — we’ll reload the film and get it ready again.</p>
+                <p class="camera-note"><a href="https://youtu.be/mWkP9_JF0as?si=HS0iDIIJhpcls5np&amp;t=37" target="_blank" rel="noopener noreferrer">Watch a short Canon AF35J how‑to video</a></p>
+            </section>
+
+            <section id="camera-kodak-template" class="camera-howto-template" hidden>
+                <div class="camera-modal-header">
+                    <img src="cameras/kodak h35.png" alt="" class="camera-modal-icon">
+                    <h3 class="camera-heading">Kodak Ektar H35 — quick how‑to</h3>
+                </div>
+                <ol class="camera-steps">
+                    <li><strong>Advance first</strong><br>Turn the little wheel until it stops before <em>every</em> photo.</li>
+                    <li><strong>Turn flash on if it’s dim</strong><br>Rotate the silver ring around the lens until the flash symbol lines up for indoors / evening. Turn it back for bright daylight to save battery.</li>
+                    <li><strong>Compose and click</strong><br>Look through the viewfinder, hold steady with both hands and press the shutter once. Wind the wheel again for the next shot.</li>
+                    <li><strong>Half‑frame magic</strong><br>This camera makes two photos per frame — a 36‑shot roll gives you 72 photos, so go wild.</li>
+                </ol>
+                <p class="camera-note">If the wheel won’t turn or the shutter won’t press, don’t open the back. Please pass the camera to one of the photographers so we can reload and fix it.</p>
+                <p class="camera-note"><a href="https://www.youtube.com/watch?v=MvWKLkV74o8" target="_blank" rel="noopener noreferrer">Watch a short Kodak Ektar H35 how‑to video</a></p>
+            </section>
+        </div>
+    </div>
+
+    <div id="camera-modal" class="camera-modal" aria-hidden="true" role="dialog">
+        <div class="camera-modal-backdrop" onclick="closeCameraModal()"></div>
+        <div class="camera-modal-content" role="document">
+            <button type="button" class="camera-modal-close" onclick="closeCameraModal()" aria-label="Close">
+                ×
+            </button>
+            <div id="camera-modal-body"></div>
+        </div>
+    </div>
+
     <footer class="footer">
         <p class="footer-meta">7 February 2026 — Code & design © Simon Dass</p>
         <nav class="bottom-nav" aria-label="Main">
@@ -144,6 +210,7 @@
             <button type="button" onclick="showPage('schedule')" class="bottom-nav-item">Schedule</button>
             <button type="button" onclick="showPage('seating')" class="bottom-nav-item">Seating</button>
             <button type="button" onclick="showPage('break')" class="bottom-nav-item">Break</button>
+            <button type="button" onclick="showPage('cameras')" class="bottom-nav-item">Cameras</button>
         </nav>
     </footer>
 
