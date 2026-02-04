@@ -141,6 +141,14 @@
     <!-- ========== CAMERAS ========== -->
     <div id="cameras-page" class="page hidden">
         <div class="inner-page">
+            <div class="film-rain" aria-hidden="true">
+                <span class="film-drop"></span>
+                <span class="film-drop"></span>
+                <span class="film-drop"></span>
+                <span class="film-drop"></span>
+                <span class="film-drop"></span>
+                <span class="film-drop"></span>
+            </div>
             <span class="detail-rose detail-rose-tr" aria-hidden="true"><img src="wedding rose.png" alt="" width="48" height="64"></span>
 
             <div class="scroll-reveal">
@@ -151,14 +159,12 @@
             </div>
 
             <div class="camera-picker scroll-reveal">
-                <button type="button" class="camera-button" onclick="openCameraModal('canon')">
+                <button type="button" class="camera-button" data-camera="canon" onclick="openCameraModal('canon')">
                     <img src="cameras/af35j.png" alt="Canon AF35J camera" class="camera-floating-img">
-                    <span class="camera-button-label">Canon AF35J</span>
                 </button>
 
-                <button type="button" class="camera-button" onclick="openCameraModal('kodak')">
+                <button type="button" class="camera-button" data-camera="kodak" onclick="openCameraModal('kodak')">
                     <img src="cameras/kodak h35.png" alt="Kodak Ektar H35 camera" class="camera-floating-img">
-                    <span class="camera-button-label">Kodak Ektar H35</span>
                 </button>
             </div>
 
@@ -169,7 +175,7 @@
                 </div>
                 <ol class="camera-steps">
                     <li><strong>Point, half‑press, full press</strong><br>Look through the viewfinder, keep fingers away from the lens and flash. Half‑press the shutter to focus, then press all the way down to take the photo. The film winds itself.</li>
-                    <li><strong>Flash (low light / indoors)</strong><br>The flash pops up when the camera thinks it needs it. If it’s dim, just point and shoot – don’t cover the flash window.</li>
+                    <li><strong>Slide the flash out</strong><br>In dim light or indoors, slide the built‑in flash unit out until it clicks. Then point and shoot — don’t cover the flash window.</li>
                     <li><strong>If it beeps or won’t shoot</strong><br>That’s usually a “too dark” or “end of roll” warning. Don’t open the back or force anything.</li>
                 </ol>
                 <p class="camera-note">If it feels stuck, tired or confusing, please hand it to one of the photographers — we’ll reload the film and get it ready again.</p>
